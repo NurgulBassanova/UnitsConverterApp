@@ -6,15 +6,15 @@ import {
   TouchableOpacity,
   ScrollView,
   useWindowDimensions,
+  ViewStyle,
 } from "react-native";
 
-// Типы для TypeScript
+// FAQ Item Component
 type FAQItemProps = {
   title: string;
   children: React.ReactNode;
 };
 
-// Компонент одного вопроса-ответа
 const FAQItem: React.FC<FAQItemProps> = ({ title, children }) => {
   const [expanded, setExpanded] = useState(false);
 
@@ -34,44 +34,48 @@ export default function About() {
   const { width, height } = useWindowDimensions();
   const isPortrait = height >= width;
 
+  const containerStyle: ViewStyle = {
+    paddingHorizontal: isPortrait ? 20 : 60,
+    paddingVertical: isPortrait ? 20 : 40,
+    alignItems: isPortrait ? "stretch" : "center",
+  };
+
+  const contentStyle: ViewStyle = {
+    width: isPortrait ? "100%" : "80%" as `${number}%`,
+  };
+
   return (
-    <ScrollView
-      contentContainerStyle={[
-        styles.container,
-        {
-          paddingHorizontal: isPortrait ? 20 : 60,
-          paddingVertical: isPortrait ? 20 : 40,
-        },
-      ]}
-    >
-      <Text style={[styles.heading, { fontSize: isPortrait ? 22 : 26 }]}>
-        Unit Converter App
-      </Text>
+    <ScrollView contentContainerStyle={[styles.container, containerStyle]}>
+      <View style={contentStyle}>
+        <Text style={[styles.heading, { fontSize: isPortrait ? 22 : 26 }]}>
+          Unit Converter App
+        </Text>
 
-      <FAQItem title="What is this app about?">
-        Our Unit Converter app is a simple yet powerful tool that allows you to convert between different units effortlessly. Whether you need to switch between metric and imperial systems or perform quick conversions for daily use, our app has you covered!
-      </FAQItem>
+        <FAQItem title="What is this app about?">
+          Our Unit Converter app is a simple yet powerful tool that allows you to convert between different units effortlessly. Whether you need to switch between metric and imperial systems or perform quick conversions for daily use, our app has you covered!
+        </FAQItem>
 
-      <FAQItem title="Length">
-        Millimeters (mm), Centimeters (cm), Meters (m), Kilometers (km), Inches (in), Feet (ft), Yards (yd), Miles (mi)
-      </FAQItem>
+        <FAQItem title="Length">
+          Millimeters (mm), Centimeters (cm), Meters (m), Kilometers (km), Inches (in), Feet (ft), Yards (yd), Miles (mi)
+        </FAQItem>
 
-      <FAQItem title="Weight">
-        Milligrams (mg), Grams (g), Kilograms (kg), Pounds (lb), Ounces (oz)
-      </FAQItem>
+        <FAQItem title="Weight">
+          Milligrams (mg), Grams (g), Kilograms (kg), Pounds (lb), Ounces (oz)
+        </FAQItem>
 
-      <FAQItem title="Temperature">
-        Celsius (°C), Fahrenheit (°F), Kelvin (K)
-      </FAQItem>
+        <FAQItem title="Temperature">
+          Celsius (°C), Fahrenheit (°F), Kelvin (K)
+        </FAQItem>
 
-      <FAQItem title="Volume">
-        Milliliters (mL), Liters (L), Cups, Pints, Gallons
-      </FAQItem>
+        <FAQItem title="Volume">
+          Milliliters (mL), Liters (L), Cups, Pints, Gallons
+        </FAQItem>
 
-      <FAQItem title="Credits">
-        Developed by Bassanova Nurgul, Zhaksybek Zhannur, Ernazarov Alsalim in the scope of the course "Crossplatform Development" at Astana IT University.{"\n"}
-        👨‍🏫 Mentor (Teacher): Assistant Professor Abzal Kyzyrkanov
-      </FAQItem>
+        <FAQItem title="Credits">
+          Developed by Bassanova Nurgul, Zhaksybek Zhannur, Ernazarov Alsalim in the scope of the course "Crossplatform Development" at Astana IT University.{"\n"}
+          👨‍🏫 Mentor (Teacher): Assistant Professor Abzal Kyzyrkanov
+        </FAQItem>
+      </View>
     </ScrollView>
   );
 }
@@ -79,6 +83,7 @@ export default function About() {
 const styles = StyleSheet.create({
   container: {
     backgroundColor: "#f9f9f9",
+    flexGrow: 1,
   },
   heading: {
     fontWeight: "bold",
