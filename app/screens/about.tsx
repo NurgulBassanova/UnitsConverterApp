@@ -1,23 +1,11 @@
-import React, { useState } from "react";
-import {
-  View,
-  Text,
-  StyleSheet,
-  TouchableOpacity,
-  ScrollView,
-  useWindowDimensions,
-  ViewStyle,
-} from "react-native";
+import React, { useEffect, useState } from "react";
 
-// FAQ Item Component
-type FAQItemProps = {
-  title: string;
-  children: React.ReactNode;
-};
+import { View, Text, StyleSheet, TouchableOpacity, ScrollView, Button } from "react-native";
+import { useTranslation } from "react-i18next";
+import { changeLanguage, initI18n } from "../../i18n";
 
-const FAQItem: React.FC<FAQItemProps> = ({ title, children }) => {
+const FAQItem = ({ title, children }: { title: string; children: string }) => {
   const [expanded, setExpanded] = useState(false);
-
   return (
     <View style={styles.faqItem}>
       <TouchableOpacity onPress={() => setExpanded(!expanded)} style={styles.faqHeader}>
@@ -31,51 +19,40 @@ const FAQItem: React.FC<FAQItemProps> = ({ title, children }) => {
 };
 
 export default function About() {
-  const { width, height } = useWindowDimensions();
-  const isPortrait = height >= width;
+  const { t, i18n } = useTranslation();
+  const [currentLang, setCurrentLang] = useState(i18n.language);
 
-  const containerStyle: ViewStyle = {
-    paddingHorizontal: isPortrait ? 20 : 60,
-    paddingVertical: isPortrait ? 20 : 40,
-    alignItems: isPortrait ? "stretch" : "center",
-  };
+  useEffect(() => {
+    initI18n().then(() => setCurrentLang(i18n.language));
+  }, []);
 
-  const contentStyle: ViewStyle = {
-    width: isPortrait ? "100%" : "80%" as `${number}%`,
+  const handleLanguageChange = async (lang: string) => {
+    await changeLanguage(lang);
+    setCurrentLang(lang);
   };
 
   return (
-    <ScrollView contentContainerStyle={[styles.container, containerStyle]}>
-      <View style={contentStyle}>
-        <Text style={[styles.heading, { fontSize: isPortrait ? 22 : 26 }]}>
-          Unit Converter App
-        </Text>
-
-        <FAQItem title="What is this app about?">
-          Our Unit Converter app is a simple yet powerful tool that allows you to convert between different units effortlessly. Whether you need to switch between metric and imperial systems or perform quick conversions for daily use, our app has you covered!
-        </FAQItem>
-
-        <FAQItem title="Length">
-          Millimeters (mm), Centimeters (cm), Meters (m), Kilometers (km), Inches (in), Feet (ft), Yards (yd), Miles (mi)
-        </FAQItem>
-
-        <FAQItem title="Weight">
-          Milligrams (mg), Grams (g), Kilograms (kg), Pounds (lb), Ounces (oz)
-        </FAQItem>
-
-        <FAQItem title="Temperature">
-          Celsius (°C), Fahrenheit (°F), Kelvin (K)
-        </FAQItem>
-
-        <FAQItem title="Volume">
-          Milliliters (mL), Liters (L), Cups, Pints, Gallons
-        </FAQItem>
-
-        <FAQItem title="Credits">
-          Developed by Bassanova Nurgul, Zhaksybek Zhannur, Ernazarov Alsalim in the scope of the course "Crossplatform Development" at Astana IT University.{"\n"}
-          👨‍🏫 Mentor (Teacher): Assistant Professor Abzal Kyzyrkanov
-        </FAQItem>
+    <ScrollView contentContainerStyle={styles.container}>
+      <View style={styles.languageSwitcher}>
+        <Button 
+          title="English" 
+          onPress={() => handleLanguageChange('en')} 
+          color={currentLang === 'en' ? '#007AFF' : '#CCCCCC'}
+        />
+        <Button 
+          title="Русский" 
+          onPress={() => handleLanguageChange('ru')} 
+          color={currentLang === 'ru' ? '#007AFF' : '#CCCCCC'}
+        />
       </View>
+
+      <Text style={styles.heading}>{t('appTitle')}</Text>
+
+      <FAQItem title={t('whatIsApp')}>
+        {t('appDescription')}
+      </FAQItem>
+
+      {/* Остальные FAQItems с использованием t() */}
     </ScrollView>
   );
 }
@@ -111,4 +88,10 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
   },
-});
+  languageSwitcher: {
+    flexDirection: "row",
+    justifyContent: "space-around",
+    marginVertical: 20,
+  },
+    
+})
