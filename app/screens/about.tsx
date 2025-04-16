@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from "react";
 
+import { Image } from "react-native";
+
 import { View, Text, StyleSheet, TouchableOpacity, ScrollView, Button } from "react-native";
 import { useTranslation } from "react-i18next";
 import { changeLanguage, initI18n } from "../../i18n";
@@ -33,18 +35,11 @@ export default function About() {
 
   return (
     <ScrollView contentContainerStyle={styles.container}>
-      <View style={styles.languageSwitcher}>
-        <Button 
-          title="English" 
-          onPress={() => handleLanguageChange('en')} 
-          color={currentLang === 'en' ? '#007AFF' : '#CCCCCC'}
-        />
-        <Button 
-          title="Русский" 
-          onPress={() => handleLanguageChange('ru')} 
-          color={currentLang === 'ru' ? '#007AFF' : '#CCCCCC'}
-        />
-      </View>
+    <View style={styles.headerRight}>
+      <TouchableOpacity onPress={() => handleLanguageChange(currentLang === 'en' ? 'ru' : 'en')}>
+        <Image source={require('../../assets/images/language.png')} style={styles.langIcon} />
+      </TouchableOpacity>
+    </View>
 
       <Text style={styles.heading}>{t('appTitle')}</Text>
 
@@ -52,7 +47,26 @@ export default function About() {
         {t('appDescription')}
       </FAQItem>
 
-      {/* Остальные FAQItems с использованием t() */}
+      <FAQItem title={t('length')}>
+  {t('lengthUnits')}
+    </FAQItem>
+
+    <FAQItem title={t('weight')}>
+      {t('weightUnits')}
+    </FAQItem>
+
+    <FAQItem title={t('temperature')}>
+      {t('temperatureUnits')}
+    </FAQItem>
+
+    <FAQItem title={t('volume')}>
+      {t('volumeUnits')}
+    </FAQItem>
+
+    <FAQItem title={t('credits')}>
+      {t('creditsText')}
+    </FAQItem>
+
     </ScrollView>
   );
 }
@@ -93,5 +107,16 @@ const styles = StyleSheet.create({
     justifyContent: "space-around",
     marginVertical: 20,
   },
+  headerRight: {
+    position: 'absolute',
+    top: 20,
+    right: 20,
+    zIndex: 1,
+  },
+  
+  langIcon: {
+    width: 30,
+    height: 30,
+  }
     
 })
