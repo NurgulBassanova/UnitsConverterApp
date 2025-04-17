@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { View, Text, StyleSheet, TouchableOpacity, ScrollView, Switch, Image } from "react-native";
 import { useTranslation } from "react-i18next";
 import { changeLanguage, initI18n } from "../../i18n";
-import { useThemeManager } from "../theme/theme";
+import { useTheme } from "../theme/theme";
 
 interface FAQItemProps {
   title: string;
@@ -11,7 +11,7 @@ interface FAQItemProps {
 
 const FAQItem: React.FC<FAQItemProps> = ({ title, children }) => {
   const [expanded, setExpanded] = useState(false);
-  const { theme } = useThemeManager();
+  const { theme } = useTheme();
 
 
   return (
@@ -29,7 +29,7 @@ const FAQItem: React.FC<FAQItemProps> = ({ title, children }) => {
 export default function About() {
   const { t, i18n } = useTranslation();
   const [currentLang, setCurrentLang] = useState(i18n.language);
-  const { theme, isDark, toggleTheme } = useThemeManager();
+  const { theme, isDark, toggleTheme } = useTheme();
 
   useEffect(() => {
     initI18n().then(() => setCurrentLang(i18n.language));

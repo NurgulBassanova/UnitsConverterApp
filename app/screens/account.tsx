@@ -1,9 +1,9 @@
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
-import { useThemeManager } from '../theme/theme';
+import { useTheme } from '../theme/theme';
 
 export default function Account() {
-  const { theme } = useThemeManager();
+  const { theme } = useTheme();
 
   return (
     <View style={[styles.container, { backgroundColor: theme.background }]}>

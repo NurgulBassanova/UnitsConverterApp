@@ -11,7 +11,7 @@ import {
   FlatList,
   Image,
 } from 'react-native';
-import { useThemeManager } from '../theme/theme';
+import { useTheme } from '../theme/theme';
 
 const unitTypes = {
   length: {
@@ -108,7 +108,7 @@ const SimpleSelect = ({
   label: string
 }) => {
   const [modalVisible, setModalVisible] = useState(false);
-  const { theme } = useThemeManager();
+  const { theme } = useTheme();
   
   const selectedLabel = items.find(item => item.value === value)?.label || '';
   
@@ -171,7 +171,7 @@ const Converter: React.FC = () => {
   const [currentUnitType, setCurrentUnitType] = useState<keyof typeof unitTypes>('length');
   const [fromUnit, setFromUnit] = useState('m');
   const [toUnit, setToUnit] = useState('cm');
-  const { theme } = useThemeManager();
+  const { theme } = useTheme();
 
   const currentUnits = unitTypes[currentUnitType];
   const currentLabels = unitLabels[currentUnitType];

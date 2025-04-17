@@ -4,7 +4,7 @@ import { Image, ColorValue } from 'react-native';
 import About from './screens/about';
 import Converter from './screens/converter';
 import Account from './screens/account';
-import { useThemeManager } from './theme/theme';
+import { useTheme } from './theme/theme';
 
 const aboutIcon = require('../assets/images/information.png');
 const converterIcon = require('../assets/images/math.png');
@@ -20,7 +20,7 @@ type TabParamList = {
 const Tab = createBottomTabNavigator<TabParamList>();
 
 export default function App() {
-  const { theme } = useThemeManager();
+  const { theme } = useTheme();
 
   return (
     <Tab.Navigator
