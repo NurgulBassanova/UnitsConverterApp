@@ -3,7 +3,6 @@ import {
   View,
   Text,
   TextInput,
-  Button,
   StyleSheet,
   SafeAreaView,
   ScrollView,
@@ -12,8 +11,8 @@ import {
   FlatList,
   Image,
 } from 'react-native';
+import { useThemeManager } from '../theme/theme';
 
-// Define all unit types
 const unitTypes = {
   length: {
     mm: 0.001,
@@ -74,10 +73,8 @@ const unitLabels: {
   },
 };
 
-// Special conversion for temperature
 const convertTemperature = (value: number, fromUnit: string, toUnit: string) => {
   let celsius;
-  // Convert to Celsius first
   switch (fromUnit) {
     case 'F':
       celsius = (value - 32) * 5/9;
@@ -85,22 +82,20 @@ const convertTemperature = (value: number, fromUnit: string, toUnit: string) => 
     case 'K':
       celsius = value - 273.15;
       break;
-    default: // Celsius
+    default:
       celsius = value;
   }
 
-  // Convert from Celsius to target unit
   switch (toUnit) {
     case 'F':
       return (celsius * 9/5) + 32;
     case 'K':
       return celsius + 273.15;
-    default: // Celsius
+    default:
       return celsius;
   }
 };
 
-// Simple select component
 const SimpleSelect = ({ 
   value, 
   items, 
@@ -113,18 +108,19 @@ const SimpleSelect = ({
   label: string
 }) => {
   const [modalVisible, setModalVisible] = useState(false);
+  const { theme } = useThemeManager();
   
   const selectedLabel = items.find(item => item.value === value)?.label || '';
   
   return (
-    <View style={styles.selectContainer}>
-      <Text style={styles.label}>{label}</Text>
+    <View style={[styles.selectContainer, { backgroundColor: theme.background }]}>
+      <Text style={[styles.label, { backgroundColor: theme.card, color: theme.text }]}>{label}</Text>
       <TouchableOpacity
         style={styles.selectButton}
         onPress={() => setModalVisible(true)}
       >
-        <Text style={styles.selectText}>{selectedLabel}</Text>
-        <Text style={styles.dropdownArrow}>▼</Text>
+        <Text style={[styles.selectText, { color: theme.text }]}>{selectedLabel}</Text>
+        <Text style={[styles.dropdownArrow, { color: theme.text }]}>▼</Text>
       </TouchableOpacity>
       
       <Modal
@@ -138,7 +134,7 @@ const SimpleSelect = ({
           activeOpacity={1}
           onPress={() => setModalVisible(false)}
         >
-          <View style={styles.modalContent}>
+          <View style={[styles.modalContent, { backgroundColor: theme.background }]}>
             <FlatList
               data={items}
               keyExtractor={(item) => item.value}
@@ -146,7 +142,8 @@ const SimpleSelect = ({
                 <TouchableOpacity
                   style={[
                     styles.modalItem,
-                    item.value === value && styles.selectedItem
+                    item.value === value && styles.selectedItem,
+                    { backgroundColor: theme.background }
                   ]}
                   onPress={() => {
                     onValueChange(item.value);
@@ -155,6 +152,7 @@ const SimpleSelect = ({
                 >
                   <Text style={[
                     styles.modalItemText,
+                    { color: theme.text },
                     item.value === value && styles.selectedItemText
                   ]}>{item.label}</Text>
                 </TouchableOpacity>
@@ -173,12 +171,10 @@ const Converter: React.FC = () => {
   const [currentUnitType, setCurrentUnitType] = useState<keyof typeof unitTypes>('length');
   const [fromUnit, setFromUnit] = useState('m');
   const [toUnit, setToUnit] = useState('cm');
+  const { theme } = useThemeManager();
 
-  // Get available units for the current type
   const currentUnits = unitTypes[currentUnitType];
   const currentLabels = unitLabels[currentUnitType];
-
-  
 
   const unitTypeItems = Object.keys(unitTypes).map(key => ({
     label: key.charAt(0).toUpperCase() + key.slice(1),
@@ -191,7 +187,6 @@ const Converter: React.FC = () => {
   }));
 
   useEffect(() => {
-    // Reset units when type changes
     const units = Object.keys(currentUnits);
     setFromUnit(units[0]);
     setToUnit(units[1]);
@@ -221,26 +216,26 @@ const Converter: React.FC = () => {
       setOutputValue(convertedValue.toFixed(2));
     }
   };
-  
 
   return (
-    <SafeAreaView style={styles.safeArea}>
+    <SafeAreaView style={[styles.safeArea, { backgroundColor: theme.background }]}>
       <ScrollView contentContainerStyle={styles.scrollContainer}>
-        <Text style={styles.title}>Unit Converter</Text>
+        <Text style={[styles.title, { color: theme.text }]}>Unit Converter</Text>
 
-        {/* Unit type selector */}
         <View style={styles.unitTypeContainer}>
           {unitTypeItems.map((item) => (
             <TouchableOpacity
               key={item.value}
               style={[
                 styles.unitTypeButton,
-                currentUnitType === item.value && styles.selectedUnitTypeButton
+                currentUnitType === item.value && styles.selectedUnitTypeButton,
+                { backgroundColor: theme.card }
               ]}
               onPress={() => setCurrentUnitType(item.value as keyof typeof unitTypes)}
             >
               <Text style={[
                 styles.unitTypeText,
+                { color: theme.text },
                 currentUnitType === item.value && styles.selectedUnitTypeText
               ]}>
                 {item.label}
@@ -250,8 +245,16 @@ const Converter: React.FC = () => {
         </View>
 
         <TextInput
-          style={styles.input}
+          style={[
+            styles.input,
+            { 
+              backgroundColor: theme.background,
+              borderColor: theme.border,
+              color: theme.text
+            }
+          ]}
           placeholder="Enter value"
+          placeholderTextColor={theme.text}
           keyboardType="numeric"
           value={inputValue}
           onChangeText={setInputValue}
@@ -273,13 +276,9 @@ const Converter: React.FC = () => {
           />
         </View>
 
-        <View style={styles.buttonContainer}>
-          <Button title="Convert" onPress={convert} />
-        </View>
-
         <View style={styles.resultContainer}>
           {outputValue !== '' && (
-            <Text style={styles.output}>
+            <Text style={[styles.output, { color: theme.text }]}>
               Result: {outputValue} {currentLabels[toUnit]}
             </Text>
           )}
@@ -296,11 +295,9 @@ const Converter: React.FC = () => {
   );
 };
 
-
 const styles = StyleSheet.create({
   safeArea: {
     flex: 1,
-    backgroundColor: '#f2f2f2',
   },
   scrollContainer: {
     alignItems: 'center',
@@ -322,7 +319,6 @@ const styles = StyleSheet.create({
     paddingVertical: 8,
     paddingHorizontal: 16,
     borderRadius: 20,
-    backgroundColor: '#e0e0e0',
   },
   selectedUnitTypeButton: {
     backgroundColor: 'tomato',
@@ -330,7 +326,6 @@ const styles = StyleSheet.create({
   unitTypeText: {
     fontSize: 14,
     fontWeight: '500',
-    color: '#333',
   },
   selectedUnitTypeText: {
     color: '#fff',
@@ -340,8 +335,6 @@ const styles = StyleSheet.create({
     padding: 12,
     borderRadius: 10,
     borderWidth: 1,
-    borderColor: '#ccc',
-    backgroundColor: '#fff',
     fontSize: 16,
     marginBottom: 20,
   },
@@ -361,23 +354,16 @@ const styles = StyleSheet.create({
     marginBottom: 10,
     alignItems: 'center',
   },
-  conversionImage: {
-    width: 100,
-    height: 100,
-  },
   selectContainer: {
     flex: 1,
     borderRadius: 10,
     overflow: 'hidden',
-    borderColor: '#ccc',
     borderWidth: 1,
-    backgroundColor: '#fff',
   },
   label: {
     fontSize: 14,
     fontWeight: '500',
     padding: 8,
-    backgroundColor: '#eee',
     textAlign: 'center',
   },
   selectButton: {
@@ -385,15 +371,12 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'space-between',
     padding: 12,
-    backgroundColor: '#fff',
   },
   selectText: {
     fontSize: 16,
-    color: '#333',
   },
   dropdownArrow: {
     fontSize: 12,
-    color: '#666',
   },
   modalOverlay: {
     flex: 1,
@@ -404,34 +387,25 @@ const styles = StyleSheet.create({
   modalContent: {
     width: '80%',
     maxHeight: '50%',
-    backgroundColor: '#fff',
     borderRadius: 10,
     overflow: 'hidden',
   },
   modalItem: {
     padding: 15,
     borderBottomWidth: 1,
-    borderBottomColor: '#eee',
   },
   selectedItem: {
     backgroundColor: '#e3efff',
   },
   modalItemText: {
     fontSize: 16,
-    color: '#333',
   },
   selectedItemText: {
     fontWeight: '600',
-    color: '#0066cc',
-  },
-  buttonContainer: {
-    width: '100%',
-    marginBottom: 20,
   },
   output: {
     fontSize: 20,
     fontWeight: '600',
-    color: '#333',
     textAlign: 'center',
   },
 });

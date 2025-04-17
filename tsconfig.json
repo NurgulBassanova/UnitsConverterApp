@@ -4,6 +4,9 @@
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
     "jsx": "react",
+    "lib": ["dom", "esNext"],
+    "module": "ESNext",
+    "target": "ESNext",
     "strict": true,
     "paths": {
       "@/*": [

@@ -1,10 +1,13 @@
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
+import { useThemeManager } from '../theme/theme';
 
-export default function account() {
+export default function Account() {
+  const { theme } = useThemeManager();
+
   return (
-    <View style={styles.container}>
-      <Text style={styles.text}>Page for account details.</Text>
+    <View style={[styles.container, { backgroundColor: theme.background }]}>
+      <Text style={[styles.text, { color: theme.text }]}>Page for account details.</Text>
     </View>
   );
 }
