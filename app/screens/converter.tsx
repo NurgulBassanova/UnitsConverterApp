@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import Toast from 'react-native-toast-message';
 import {
   View,
   Text,
@@ -178,6 +179,22 @@ const Converter: React.FC = () => {
   const { t, i18n } = useTranslation();
   const [currentLang, setCurrentLang] = useState(i18n.language);
   const { theme, isDark, toggleTheme } = useTheme();
+  const [lastTapTime, setLastTapTime] = useState<number | null>(null); 
+
+  const handleUnitTypeDoubleTap = (unitType: keyof typeof unitTypes, label: string) => {
+    const now = Date.now();
+    if (lastTapTime && now - lastTapTime < 300) {
+      setCurrentUnitType(unitType);
+      setLastTapTime(null);
+      Toast.show({
+        type: 'success',
+        text1: t('unitChanged'),
+        text2: t(label), // Use the passed label here
+      });
+    } else {
+      setLastTapTime(now);
+    }
+  };
 
   useEffect(() => {
     initI18n().then(() => setCurrentLang(i18n.language));
@@ -263,26 +280,27 @@ const Converter: React.FC = () => {
         <Text style={[styles.title, { color: theme.text }]}>{t('unitConverter')}</Text>
 
         <View style={styles.unitTypeContainer}>
-          {unitTypeItems.map((item) => (
-            <TouchableOpacity
+            {unitTypeItems.map((item) => (
+              <TouchableOpacity
               key={item.value}
               style={[
                 styles.unitTypeButton,
                 currentUnitType === item.value && styles.selectedUnitTypeButton,
-                { backgroundColor: theme.card }
+                { backgroundColor: theme.card },
               ]}
-              onPress={() => setCurrentUnitType(item.value as keyof typeof unitTypes)}
+              onPress={() => handleUnitTypeDoubleTap(item.value as keyof typeof unitTypes, item.label)}
             >
-              <Text style={[
-                styles.unitTypeText,
-                { color: currentUnitType === item.value ? '#007AFF' : theme.text }
-              ]}>
+              <Text
+                style={[
+                  styles.unitTypeText,
+                  { color: currentUnitType === item.value ? '#007AFF' : theme.text },
+                ]}
+              >
                 {t(item.label)}
               </Text>
             </TouchableOpacity>
-          ))}
-        </View>
-
+            ))}
+          </View>
         <TextInput
           style={[
             styles.input,
