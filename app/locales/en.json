@@ -13,6 +13,29 @@
     "credits": "Credits",
     "creditsText": "Developed by Bassanova Nurgul, Zhaksybek Zhannur, Ernazarov Alsalim in the scope of the course \"Crossplatform Development\" at Astana IT University.\n👨‍🏫 Mentor (Teacher): Assistant Professor Abzal Kyzyrkanov",
     "Light Mode": "Light Mode",
-    "Dark Mode": "Dark Mode"
-  
-  }
+    "Dark Mode": "Dark Mode",
+      "unitConverter": "Unit Converter",
+      "time": "Time",
+      "mm": "Millimeters",
+      "cm": "Centimeters",
+      "m": "Meters",
+      "km": "Kilometers",
+      "mi": "Miles",
+      "mg": "Milligrams",
+      "g": "Grams",
+      "kg": "Kilograms",
+      "lb": "Pounds",
+      "oz": "Ounces",
+      "ms": "Milliseconds",
+      "s": "Seconds",
+      "min": "Minutes",
+      "h": "Hours",
+      "d": "Days",
+      "°C": "Celsius",
+      "°F": "Fahrenheit",
+      "K": "Kelvin",
+      "from": "From",
+      "to": "To",
+      "enterValue": "Enter value",
+      "result": "Result"
+    }

@@ -10,7 +10,10 @@ import {
   Modal,
   FlatList,
   Image,
+  Switch,
 } from 'react-native';
+import { useTranslation } from "react-i18next";
+import { changeLanguage, initI18n } from "../../i18n";
 import { useTheme } from '../theme/theme';
 
 const unitTypes = {
@@ -46,30 +49,30 @@ const unitLabels: {
   [key in keyof typeof unitTypes]: { [key: string]: string }
 } = {
   length: {
-    mm: 'Millimeters',
-    cm: 'Centimeters',
-    m: 'Meters',
-    km: 'Kilometers',
-    mi: 'Miles',
+    mm: 'mm',
+    cm: 'cm',
+    m: 'm',
+    km: 'km',
+    mi: 'mi',
   },
   weight: {
-    mg: 'Milligrams',
-    g: 'Grams',
-    kg: 'Kilograms',
-    lb: 'Pounds',
-    oz: 'Ounces',
+    mg: 'mg',
+    g: 'g',
+    kg: 'kg',
+    lb: 'lb',
+    oz: 'oz',
   },
   time: {
-    ms: 'Milliseconds',
-    s: 'Seconds',
-    min: 'Minutes',
-    h: 'Hours',
-    d: 'Days',
+    ms: 'ms',
+    s: 's',
+    min: 'min',
+    h: 'h',
+    d: 'd',
   },
   temperature: {
-    C: 'Celsius',
-    F: 'Fahrenheit',
-    K: 'Kelvin',
+    C: '°C',
+    F: '°F',
+    K: 'K',
   },
 };
 
@@ -109,17 +112,18 @@ const SimpleSelect = ({
 }) => {
   const [modalVisible, setModalVisible] = useState(false);
   const { theme } = useTheme();
+  const { t } = useTranslation();
   
   const selectedLabel = items.find(item => item.value === value)?.label || '';
   
   return (
-    <View style={[styles.selectContainer, { backgroundColor: theme.background }]}>
-      <Text style={[styles.label, { backgroundColor: theme.card, color: theme.text }]}>{label}</Text>
+    <View style={[styles.selectContainer, { backgroundColor: theme.background, borderColor: theme.border }]}>
+      <Text style={[styles.label, { backgroundColor: theme.card, color: theme.text }]}>{t(label)}</Text>
       <TouchableOpacity
         style={styles.selectButton}
         onPress={() => setModalVisible(true)}
       >
-        <Text style={[styles.selectText, { color: theme.text }]}>{selectedLabel}</Text>
+        <Text style={[styles.selectText, { color: theme.text }]}>{t(selectedLabel)}</Text>
         <Text style={[styles.dropdownArrow, { color: theme.text }]}>▼</Text>
       </TouchableOpacity>
       
@@ -143,7 +147,7 @@ const SimpleSelect = ({
                   style={[
                     styles.modalItem,
                     item.value === value && styles.selectedItem,
-                    { backgroundColor: theme.background }
+                    { backgroundColor: theme.card }
                   ]}
                   onPress={() => {
                     onValueChange(item.value);
@@ -154,7 +158,7 @@ const SimpleSelect = ({
                     styles.modalItemText,
                     { color: theme.text },
                     item.value === value && styles.selectedItemText
-                  ]}>{item.label}</Text>
+                  ]}>{t(item.label)}</Text>
                 </TouchableOpacity>
               )}
             />
@@ -171,13 +175,24 @@ const Converter: React.FC = () => {
   const [currentUnitType, setCurrentUnitType] = useState<keyof typeof unitTypes>('length');
   const [fromUnit, setFromUnit] = useState('m');
   const [toUnit, setToUnit] = useState('cm');
-  const { theme } = useTheme();
+  const { t, i18n } = useTranslation();
+  const [currentLang, setCurrentLang] = useState(i18n.language);
+  const { theme, isDark, toggleTheme } = useTheme();
+
+  useEffect(() => {
+    initI18n().then(() => setCurrentLang(i18n.language));
+  }, []);
+
+  const handleLanguageChange = async (lang: string) => {
+    await changeLanguage(lang);
+    setCurrentLang(lang);
+  };
 
   const currentUnits = unitTypes[currentUnitType];
   const currentLabels = unitLabels[currentUnitType];
 
   const unitTypeItems = Object.keys(unitTypes).map(key => ({
-    label: key.charAt(0).toUpperCase() + key.slice(1),
+    label: key,
     value: key
   }));
 
@@ -220,7 +235,27 @@ const Converter: React.FC = () => {
   return (
     <SafeAreaView style={[styles.safeArea, { backgroundColor: theme.background }]}>
       <ScrollView contentContainerStyle={styles.scrollContainer}>
-        <Text style={[styles.title, { color: theme.text }]}>Unit Converter</Text>
+        
+
+        <View style={styles.themeToggleContainer}>
+          <Text style={[styles.themeText, { color: theme.text }]}>
+            {isDark ? t('Dark Mode') : t('Light Mode')}
+          </Text>
+          <Switch 
+            value={isDark} 
+            onValueChange={toggleTheme}
+            trackColor={{ false: "#767577", true: theme.primary }}
+            thumbColor={isDark ? "#FF6347" : "#f4f3f4"}
+          />
+        </View>
+
+        <View style={styles.topRight}>
+          <TouchableOpacity onPress={() => handleLanguageChange(currentLang === 'en' ? 'ru' : 'en')}>
+            <Image source={require('../../assets/images/language.png')} style={styles.langIcon} />
+          </TouchableOpacity>
+        </View>
+
+        <Text style={[styles.title, { color: theme.text }]}>{t('unitConverter')}</Text>
 
         <View style={styles.unitTypeContainer}>
           {unitTypeItems.map((item) => (
@@ -235,11 +270,9 @@ const Converter: React.FC = () => {
             >
               <Text style={[
                 styles.unitTypeText,
-                { color: theme.text },
                 { color: currentUnitType === item.value ? '#007AFF' : theme.text }
-
               ]}>
-                {item.label}
+                {t(item.label)}
               </Text>
             </TouchableOpacity>
           ))}
@@ -254,7 +287,7 @@ const Converter: React.FC = () => {
               color: theme.text
             }
           ]}
-          placeholder="Enter value"
+          placeholder={t('enterValue')}
           placeholderTextColor={theme.text}
           keyboardType="numeric"
           value={inputValue}
@@ -266,21 +299,21 @@ const Converter: React.FC = () => {
             value={fromUnit}
             items={unitItems}
             onValueChange={(value) => setFromUnit(value)}
-            label="From"
+            label="from"
           />
           
           <SimpleSelect
             value={toUnit}
             items={unitItems}
             onValueChange={(value) => setToUnit(value)}
-            label="To"
+            label="to"
           />
         </View>
 
         <View style={styles.resultContainer}>
           {outputValue !== '' && (
             <Text style={[styles.output, { color: theme.text }]}>
-              Result: {outputValue} {currentLabels[toUnit]}
+              {t('result')}: {outputValue} {t(currentLabels[toUnit])}
             </Text>
           )}
           <View style={styles.imageContainer}>
@@ -408,6 +441,29 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontWeight: '600',
     textAlign: 'center',
+  },
+  topRight: {
+    flexDirection: 'row',
+    justifyContent: 'flex-end',
+    alignItems: 'center',
+    marginBottom: 10,
+    width: '100%',
+  },
+  themeToggleContainer: {
+    flexDirection: 'row',
+    justifyContent: 'flex-end',
+    alignItems: 'center',
+    marginBottom: 20,
+    paddingHorizontal: 16,
+    width: '100%',
+  },
+  themeText: {
+    marginRight: 10,
+    fontSize: 16,
+  },
+  langIcon: {
+    width: 30,
+    height: 30,
   },
 });
 
