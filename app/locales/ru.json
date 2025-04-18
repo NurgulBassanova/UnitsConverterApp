@@ -37,5 +37,10 @@
       "from": "Из",
       "to": "В",
       "enterValue": "Введите значение",
-      "result": "Результат"
+      "result": "Результат",
+      "about": "О приложении",
+      "converter": "Конвертер",
+      "account": "Аккаунт",
+      "language": "Язык",
+      "switch_language": "Сменить язык"
     }

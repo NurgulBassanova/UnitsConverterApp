@@ -37,5 +37,11 @@
       "from": "From",
       "to": "To",
       "enterValue": "Enter value",
-      "result": "Result"
-    }
+      "result": "Result",
+        "about": "About",
+        "converter": "Converter",
+        "account": "Account",
+        "language": "Language",
+        "switch_language": "Switch Language"
+      }
+      
