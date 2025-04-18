@@ -1,4 +1,6 @@
+//converter.tsx
 import React, { useState, useEffect } from 'react';
+import { GestureHandlerRootView, Swipeable } from 'react-native-gesture-handler';
 import Toast from 'react-native-toast-message';
 import {
   View,
@@ -301,21 +303,33 @@ const Converter: React.FC = () => {
             </TouchableOpacity>
             ))}
           </View>
-        <TextInput
-          style={[
-            styles.input,
-            { 
-              backgroundColor: theme.background,
-              borderColor: theme.border,
-              color: theme.text
-            }
-          ]}
-          placeholder={t('enterValue')}
-          placeholderTextColor={theme.text}
-          keyboardType="numeric"
-          value={inputValue}
-          onChangeText={setInputValue}
-        />
+          <View style={styles.inputRow}>
+            <TextInput
+              style={[
+                styles.inputField,
+                {
+                  backgroundColor: theme.background,
+                  borderColor: theme.border,
+                  color: theme.text,
+                },
+              ]}
+              placeholder={t('enterValue')}
+              placeholderTextColor={theme.text}
+              keyboardType="numeric"
+              value={inputValue}
+              onChangeText={setInputValue}
+            />
+
+            <TouchableOpacity
+              onLongPress={() => setInputValue('')}
+              style={styles.resetButton}
+            >
+              <Text style={styles.resetButtonText}>⟲</Text>
+            </TouchableOpacity>
+          </View>
+
+
+
 
         <View style={styles.pickerRow}>
           <SimpleSelect
@@ -387,14 +401,23 @@ const styles = StyleSheet.create({
   selectedUnitTypeText: {
     color: '#fff',
   },
-  input: {
+  inputRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
     width: '100%',
-    padding: 12,
-    borderRadius: 10,
-    borderWidth: 1,
-    fontSize: 16,
     marginBottom: 20,
   },
+  
+  inputField: {
+    flex: 1,
+    paddingVertical: 10,
+    paddingHorizontal: 15,
+    height: 50,
+    borderRadius: 8,
+    borderWidth: 1,
+    fontSize: 16,
+  },
+  
   pickerRow: {
     flexDirection: 'row',
     gap: 10,
@@ -489,6 +512,23 @@ const styles = StyleSheet.create({
     width: 30,
     height: 30,
   },
+  resetButton: {
+    marginLeft: 10,
+    backgroundColor: '#FF4500',
+    paddingVertical: 8,
+    paddingHorizontal: 10,
+    borderRadius: 6,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  
+  resetButtonText: {
+    color: '#fff',
+    fontSize: 16,
+    fontWeight: '600',
+  },
+  
+  
 });
 
 export default Converter;
