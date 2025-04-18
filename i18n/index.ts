@@ -5,6 +5,7 @@ import * as Localization from 'expo-localization';
 
 import en from '../app/locales/en.json';
 import ru from '../app/locales/ru.json';
+import kk from '../app/locales/kk.json'; // Правильный путь к казахскому файлу
 
 // Конфигурация i18n
 i18n
@@ -13,6 +14,7 @@ i18n
     resources: {
       en: { translation: en },
       ru: { translation: ru },
+      kk: { translation: kk },
     },
     lng: 'en',
     fallbackLng: 'en',
@@ -30,10 +32,10 @@ export const changeLanguage = async (lng: string) => {
 export const initI18n = async () => {
   const savedLang = await AsyncStorage.getItem('appLanguage');
   const deviceLang = Localization.locale.split('-')[0];
-  
+
   if (savedLang) {
     await i18n.changeLanguage(savedLang);
-  } else if (deviceLang && ['en', 'ru'].includes(deviceLang)) {
+  } else if (deviceLang && ['en', 'ru', 'kk'].includes(deviceLang)) {
     await i18n.changeLanguage(deviceLang);
   }
 };

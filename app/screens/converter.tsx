@@ -250,9 +250,14 @@ const Converter: React.FC = () => {
         </View>
 
         <View style={styles.topRight}>
-          <TouchableOpacity onPress={() => handleLanguageChange(currentLang === 'en' ? 'ru' : 'en')}>
-            <Image source={require('../../assets/images/language.png')} style={styles.langIcon} />
-          </TouchableOpacity>
+          <TouchableOpacity
+                  onPress={() => {
+                    const nextLang = currentLang === 'en' ? 'ru' : currentLang === 'ru' ? 'kk' : 'en';
+                    handleLanguageChange(nextLang);
+                  }}
+                >
+                  <Image source={require('../../assets/images/language.png')} style={styles.langIcon} />
+                </TouchableOpacity>
         </View>
 
         <Text style={[styles.title, { color: theme.text }]}>{t('unitConverter')}</Text>

@@ -4,9 +4,10 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import en from './locales/en.json';
 import ru from './locales/ru.json';
+import kk from './locales/kk.json'; 
 
 I18n.fallbacks = true;
-I18n.translations = { en, ru };
+I18n.translations = { en, ru, kk }; 
 
 const setLocale = async (locale) => {
   await AsyncStorage.setItem('userLocale', locale);
@@ -15,7 +16,8 @@ const setLocale = async (locale) => {
 
 const getLocale = async () => {
   const savedLocale = await AsyncStorage.getItem('userLocale');
-  return savedLocale || Localization.locale.split('-')[0] || 'en';
+  const deviceLocale = Localization.locale.split('-')[0];
+  return savedLocale || (['en', 'ru', 'kk'].includes(deviceLocale) ? deviceLocale : 'en');
 };
 
 const initI18n = async () => {
