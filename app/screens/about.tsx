@@ -136,6 +136,7 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-end',
     alignItems: 'center',
     marginBottom: 20,
+    marginTop: 30,
     paddingHorizontal: 16,
   },
   themeText: {

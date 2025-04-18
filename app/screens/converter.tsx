@@ -236,7 +236,8 @@ const Converter: React.FC = () => {
               <Text style={[
                 styles.unitTypeText,
                 { color: theme.text },
-                currentUnitType === item.value && styles.selectedUnitTypeText
+                { color: currentUnitType === item.value ? '#007AFF' : theme.text }
+
               ]}>
                 {item.label}
               </Text>

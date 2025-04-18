@@ -1,5 +1,5 @@
 {
-    "appTitle": "Unit Converter App",
+    "appTitle": "Unit Converter",
     "whatIsApp": "What is this app about?",
     "appDescription": "Our Unit Converter app is a simple yet powerful tool that allows you to convert between different units effortlessly. Whether you need to switch between metric and imperial systems or perform quick conversions for daily use, our app has you covered!",
     "length": "Length",
@@ -11,5 +11,8 @@
     "volume": "Volume",
     "volumeUnits": "Milliliters (mL), Liters (L), Cups, Pints, Gallons",
     "credits": "Credits",
-    "creditsText": "Developed by Bassanova Nurgul, Zhaksybek Zhannur, Ernazarov Alsalim in the scope of the course \"Crossplatform Development\" at Astana IT University.\n👨‍🏫 Mentor (Teacher): Assistant Professor Abzal Kyzyrkanov"
+    "creditsText": "Developed by Bassanova Nurgul, Zhaksybek Zhannur, Ernazarov Alsalim in the scope of the course \"Crossplatform Development\" at Astana IT University.\n👨‍🏫 Mentor (Teacher): Assistant Professor Abzal Kyzyrkanov",
+    "Light Mode": "Light Mode",
+    "Dark Mode": "Dark Mode"
+  
   }
