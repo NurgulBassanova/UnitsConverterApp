@@ -42,10 +42,12 @@ export default function About() {
 
   return (
     <ScrollView contentContainerStyle={[styles.container, { backgroundColor: theme.background }]}>
+      {/*
       <View style={styles.themeToggleContainer}>
         <Text style={[styles.themeText, { color: theme.text }]}>
           {isDark ? t('Dark Mode') : t('Light Mode')}
         </Text>
+        {/*
         <Switch 
           value={isDark} 
           onValueChange={toggleTheme}
@@ -53,7 +55,8 @@ export default function About() {
           thumbColor={isDark ? "#FF6347" : "#f4f3f4"}
         />
       </View>
-
+       */}
+      {/*
       <View style={styles.topRight}>
       <TouchableOpacity
         onPress={() => {
@@ -65,7 +68,7 @@ export default function About() {
       </TouchableOpacity>
 
       </View>
-
+      */}
       <Text style={[styles.heading, { color: theme.text }]}>{t('appTitle')}</Text>
       
       <View key={isDark? 'dark' : 'light'}>
@@ -100,13 +103,14 @@ export default function About() {
 const styles = StyleSheet.create({
   container: {
     flexGrow: 1,
-    padding: 16,
+    padding: 40,
   },
   heading: {
     fontWeight: "bold",
     marginBottom: 20,
     textAlign: "center",
     fontSize: 22,
+    marginTop: 30,
   },
   subheading: {
     fontSize: 18,
@@ -114,9 +118,9 @@ const styles = StyleSheet.create({
   },
   text: {
     fontSize: 16,
-    marginTop: 10,
+    marginTop: 25,
     marginBottom: 15,
-    paddingLeft: 10,
+    paddingLeft: 5, 
   },
   faqItem: {
     marginBottom: 15,

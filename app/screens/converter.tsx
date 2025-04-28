@@ -255,7 +255,7 @@ const Converter: React.FC = () => {
     <SafeAreaView style={[styles.safeArea, { backgroundColor: theme.background }]}>
       <ScrollView contentContainerStyle={styles.scrollContainer}>
         
-
+      {/*
         <View style={styles.themeToggleContainer}>
           <Text style={[styles.themeText, { color: theme.text }]}>
             {isDark ? t('Dark Mode') : t('Light Mode')}
@@ -267,7 +267,8 @@ const Converter: React.FC = () => {
             thumbColor={isDark ? "#FF6347" : "#f4f3f4"}
           />
         </View>
-
+        */}
+        {/*
         <View style={styles.topRight}>
           <TouchableOpacity
                   onPress={() => {
@@ -278,7 +279,7 @@ const Converter: React.FC = () => {
                   <Image source={require('../../assets/images/language.png')} style={styles.langIcon} />
                 </TouchableOpacity>
         </View>
-
+        */}
         <Text style={[styles.title, { color: theme.text }]}>{t('unitConverter')}</Text>
 
         <View style={styles.unitTypeContainer}>
@@ -372,7 +373,9 @@ const styles = StyleSheet.create({
   },
   scrollContainer: {
     alignItems: 'center',
-    padding: 20,
+    paddingHorizontal: 20,
+    paddingTop: 50,         
+    paddingBottom: 20, 
   },
   title: {
     fontSize: 28,
