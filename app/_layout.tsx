@@ -3,11 +3,15 @@ import { Stack } from "expo-router";
 import React from "react";
 import { ThemeProvider, useTheme } from "./theme/theme";
 
+import { AuthProvider } from "../auth/AuthContext"; 
+
 export default function RootLayout() {
   return (
-    <ThemeProvider>
-      <LayoutWithTheme />
-    </ThemeProvider>
+    <AuthProvider>
+      <ThemeProvider>
+        <LayoutWithTheme />
+      </ThemeProvider>
+    </AuthProvider>
   );
 }
 

@@ -4,6 +4,8 @@ import { Image } from 'react-native';
 import About from './screens/about';
 import Converter from './screens/converter';
 import Account from './screens/account';
+import Login from './screens/login';
+
 import Settings from './screens/settings'; // Import Settings screen
 import { useTheme } from './theme/theme';
 import { useTranslation } from 'react-i18next';
@@ -17,7 +19,8 @@ type TabParamList = {
   About: undefined;
   Converter: undefined;
   Account: undefined;
-  Settings: undefined; // Add Settings to the TabParamList
+  Settings: undefined;
+  Login: undefined;  
 };
 
 const Tab = createBottomTabNavigator<TabParamList>();
@@ -45,6 +48,8 @@ export default function App() {
             iconSource = accountIcon;
           } else if (route.name === 'Settings') { // Check for Settings tab
             iconSource = settingsIcon;
+          } else if (route.name === 'Login') { 
+            iconSource = accountIcon;
           }
 
           return (
@@ -76,13 +81,19 @@ export default function App() {
       <Tab.Screen
         name="Account"
         component={Account}
-        options={{ tabBarLabel: t('account') }}
+        options={{ tabBarLabel: t('Account') }}
       />
       <Tab.Screen
         name="Settings" // Add Settings tab here
         component={Settings}
         options={{ tabBarLabel: t('settings') }} 
       />
+      <Tab.Screen
+        name="Login" 
+        component={Login}
+        options={{ tabBarLabel: t('login') }} 
+      />
+
     </Tab.Navigator>
   );
 }
