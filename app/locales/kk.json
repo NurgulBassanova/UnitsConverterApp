@@ -43,6 +43,18 @@
     "account": "Аккаунт",
     "settings": "Параметрлер",
     "language": "Тіл",
-    "switch_language": "Тілді ауыстыру"
+    "switch_language": "Тілді ауыстыру",
+    "Welcome!": "Қош келдіңіз!",
+    "Create Account": "Аккаунт ашу",
+    "loginToContinue": "Жалғастыру үшін кіріңіз",
+    "register now": "Тіркелу",
+    "email": "Электрондық пошта",
+    "password": "Құпия сөз",
+    "login": "Кіру",
+    "register": "Тіркелу",
+    "no account?": "Аккаунт жоқ па?",
+    "haveAnAccount": "Аккаунтыңыз бар ма?",
+    "loginFailed": "Кіру қатесі",
+    "registrationFailed": "Тіркеу қатесі"
   }
   

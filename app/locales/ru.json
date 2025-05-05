@@ -43,5 +43,17 @@
       "account": "Аккаунт",
       "language": "Язык",
       "settings": "Настройки",
-      "switch_language": "Сменить язык"
+      "switch_language": "Сменить язык",
+      "Welcome!": "Добро пожаловать!",
+    "Create Account": "Создать аккаунт",
+    "loginToContinue": "Войдите, чтобы продолжить",
+    "register now": "Зарегистрироваться",
+    "email": "Электронная почта",
+    "password": "Пароль",
+    "login": "Войти",
+    "register": "Регистрация",
+    "no account?": "Нет аккаунта?",
+    "haveAnAccount": "Уже есть аккаунт?",
+    "loginFailed": "Ошибка входа",
+    "registrationFailed": "Ошибка регистрации"
     }

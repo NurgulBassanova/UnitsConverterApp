@@ -43,6 +43,18 @@
         "account": "Account",
         "settings": "Settings",
         "language": "Language",
-        "switch_language": "Switch Language"
+        "switch_language": "Switch Language",
+        "Welcome!": "Welcome!",
+    "Create Account": "Create Account",
+    "loginToContinue": "Login to continue",
+    "register now": "Register now",
+    "email": "Email",
+    "password": "Password",
+    "login": "Login",
+    "register": "Register",
+    "no account?": "No account?",
+    "haveAnAccount": "Have an account?",
+    "loginFailed": "Login Failed",
+    "registrationFailed": "Registration Failed"
       }
       
