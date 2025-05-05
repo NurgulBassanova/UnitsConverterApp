@@ -5,7 +5,7 @@ import * as Localization from 'expo-localization';
 
 import en from '../app/locales/en.json';
 import ru from '../app/locales/ru.json';
-import kk from '../app/locales/kk.json'; // Правильный путь к казахскому файлу
+import kk from '../app/locales/kk.json'; 
 
 // Конфигурация i18n
 i18n

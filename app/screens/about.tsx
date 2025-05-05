@@ -58,23 +58,7 @@ export default function About() {
 
   return (
     <ScrollView contentContainerStyle={[styles.container, { backgroundColor: theme.background }]}>
-<<<<<<< HEAD
-      {/*
-      <View style={styles.themeToggleContainer}>
-        <Text style={[styles.themeText, { color: theme.text }]}>
-          {isDark ? t('Dark Mode') : t('Light Mode')}
-        </Text>
-        {/*
-        <Switch 
-          value={isDark} 
-          onValueChange={toggleTheme}
-          trackColor={{ false: "#767577", true: theme.primary }}
-          thumbColor={isDark ? "#FF6347" : "#f4f3f4"}
-        />
-      </View>
-       */}
-      {/*
-=======
+
   <View style={styles.themeToggleContainer}>
   <Text style={[styles.themeText, { color: theme.text }]}>
     {isDarkMode ? t("Dark Mode") : t("Light Mode")}
@@ -87,13 +71,12 @@ export default function About() {
   </TouchableOpacity>
 </View>
 
->>>>>>> 429359eb3854906fffe12c271cc8d0af56569c87
       <View style={styles.topRight}>
         <TouchableOpacity onPress={() => handleLanguageChange(currentLang === 'en' ? 'ru' : 'en')}>
           <Image source={require('../../assets/images/language.png')} style={styles.langIcon} />
         </TouchableOpacity>
       </View>
-      */}
+  
       <Text style={[styles.heading, { color: theme.text }]}>{t('appTitle')}</Text>
       
       <View key={isDarkMode? 'dark' : 'light'}>
