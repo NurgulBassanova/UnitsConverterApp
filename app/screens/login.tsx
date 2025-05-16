@@ -17,7 +17,7 @@ const Login: React.FC<LoginProps> = ({ onLogin }) => {
   const [surname, setSurname] = useState('');
   const [isLogin, setIsLogin] = useState(true);
   const [secureEntry, setSecureEntry] = useState(true);
-  const { login, register } = useAuth();
+  const { login, register,} = useAuth();
   const { theme } = useTheme();
   const { t } = useTranslation();
   const navigation = useNavigation<any>();

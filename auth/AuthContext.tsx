@@ -12,7 +12,7 @@ import { doc, setDoc, getDoc } from 'firebase/firestore';
 interface AuthContextType {
   user: User | null;
   loading: boolean;
-  register: (email: string, password: string) => Promise<void>;
+  register: (email: string, password: string, name: string, surname: string) => Promise<void>;
   login: (email: string, password: string) => Promise<void>;
   logout: () => Promise<void>;
   updateUserPreferences: (prefs: UserPreferences) => Promise<void>;
