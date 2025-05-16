@@ -1,14 +1,20 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, TouchableOpacity, StyleSheet, Alert, KeyboardAvoidingView, Platform, Image } from 'react-native';
+import { View, Text, TextInput, TouchableOpacity, StyleSheet, Alert, KeyboardAvoidingView, Platform } from 'react-native';
 import { useAuth } from '../../auth/AuthContext';
 import { useTheme } from '../theme/theme';
 import { useTranslation } from 'react-i18next';
 import { useNavigation } from '@react-navigation/native';
 import { Ionicons } from '@expo/vector-icons';
 
-const Login = () => {
+interface LoginProps {
+  onLogin?: () => void;
+}
+
+const Login: React.FC<LoginProps> = ({ onLogin }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [name, setName] = useState('');
+  const [surname, setSurname] = useState('');
   const [isLogin, setIsLogin] = useState(true);
   const [secureEntry, setSecureEntry] = useState(true);
   const { login, register } = useAuth();
@@ -21,12 +27,24 @@ const Login = () => {
       if (isLogin) {
         await login(email, password);
       } else {
-        await register(email, password);
+        await register(email, password, name, surname);
+      }
+      // Call the onLogin callback prop if exists
+      if (onLogin) {
+        onLogin();
       }
       navigation.navigate('Account');
     } catch (error: any) {
       Alert.alert(isLogin ? t('loginFailed') : t('registrationFailed'), error.message);
     }
+  };
+
+  const resetForm = () => {
+    setEmail('');
+    setPassword('');
+    setName('');
+    setSurname('');
+    setIsLogin(!isLogin);
   };
 
   return (
@@ -45,6 +63,41 @@ const Login = () => {
         <Text style={[styles.subtitle, { color: theme.textSecondary }]}>
           {isLogin ? t('loginToContinue') : t('register now')}
         </Text>
+
+        {/* Name and Surname Inputs (only visible in registration mode) */}
+        {!isLogin && (
+          <>
+            <View style={styles.inputContainer}>
+              <Ionicons name="person-outline" size={20} color={theme.textSecondary} style={styles.inputIcon} />
+              <TextInput
+                style={[styles.input, {
+                  backgroundColor: theme.card,
+                  color: theme.text,
+                }]}
+                placeholder={t('name')}
+                placeholderTextColor={theme.textSecondary}
+                value={name}
+                onChangeText={setName}
+                autoCapitalize="words"
+              />
+            </View>
+
+            <View style={styles.inputContainer}>
+              <Ionicons name="people-outline" size={20} color={theme.textSecondary} style={styles.inputIcon} />
+              <TextInput
+                style={[styles.input, {
+                  backgroundColor: theme.card,
+                  color: theme.text,
+                }]}
+                placeholder={t('surname')}
+                placeholderTextColor={theme.textSecondary}
+                value={surname}
+                onChangeText={setSurname}
+                autoCapitalize="words"
+              />
+            </View>
+          </>
+        )}
 
         {/* Email Input */}
         <View style={styles.inputContainer}>
@@ -96,37 +149,17 @@ const Login = () => {
           </Text>
         </TouchableOpacity>
 
-        
-
         {/* Switch between Login/Register */}
         <View style={styles.switchContainer}>
           <Text style={{ color: theme.textSecondary }}>
             {isLogin ? t('no account?') : t('haveAnAccount')}
           </Text>
-          <TouchableOpacity onPress={() => setIsLogin(!isLogin)}>
+          <TouchableOpacity onPress={resetForm}>
             <Text style={[styles.switchText, { color: theme.primary }]}>
               {isLogin ? t('register') : t('login')}
             </Text>
           </TouchableOpacity>
         </View>
-
-        {/* Social Login Options
-        <View style={styles.socialContainer}>
-          <Text style={[styles.socialText, { color: theme.textSecondary }]}>
-            {t('orContinueWith')}
-          </Text>
-          <View style={styles.socialIcons}>
-            <TouchableOpacity style={[styles.socialButton, { backgroundColor: theme.card }]}>
-              <Ionicons name="logo-google" size={24} color={theme.text} />
-            </TouchableOpacity>
-            <TouchableOpacity style={[styles.socialButton, { backgroundColor: theme.card }]}>
-              <Ionicons name="logo-apple" size={24} color={theme.text} />
-            </TouchableOpacity>
-            <TouchableOpacity style={[styles.socialButton, { backgroundColor: theme.card }]}>
-              <Ionicons name="logo-facebook" size={24} color={theme.text} />
-            </TouchableOpacity>
-          </View>
-        </View> */}
       </View>
     </KeyboardAvoidingView>
   );
