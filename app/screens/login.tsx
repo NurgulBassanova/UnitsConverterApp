@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+ import React, { useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet, KeyboardAvoidingView, Platform } from 'react-native';
 import { useAuth } from '../../auth/AuthContext';
 import { useTheme } from '../theme/theme';
@@ -138,6 +138,7 @@ const handleSubmit = async () => {
           <Ionicons name="lock-closed" size={60} color={theme.primary} />
         </View>
 
+
         <Text style={[styles.title, { color: theme.text }]}>
           {isLogin ? t('Welcome!') : t('Create Account')}
         </Text>
@@ -233,6 +234,7 @@ const handleSubmit = async () => {
             {isLogin ? t('login') : t('register')}
           </Text>
         </TouchableOpacity>
+
 
         {/* Switch between Login/Register */}
         <View style={styles.switchContainer}>
