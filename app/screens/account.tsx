@@ -7,7 +7,7 @@ import { Ionicons } from '@expo/vector-icons';
 import Toast from 'react-native-toast-message';
 
 const AccountScreen = () => {
-  const { user, logout} = useAuth();
+  const { user, isGuest, logout, exitGuestMode } = useAuth();
   const { theme, isDarkMode, toggleTheme } = useTheme();
   const { t, i18n } = useTranslation();
   const [currentLanguage, setCurrentLanguage] = useState(i18n.language);
@@ -55,6 +55,29 @@ const AccountScreen = () => {
 
   return (
     <ScrollView style={[styles.container, { backgroundColor: theme.background }]}>
+      {isGuest ? (
+        <View style={styles.guestContent}>
+          <View style={styles.header}>
+            <View style={[styles.avatarContainer, { backgroundColor: theme.secondary }]}>
+              <Ionicons name="person-outline" size={60} color="white" />
+            </View>
+            <Text style={[styles.username, { color: theme.text }]}>{t('guest')}</Text>
+          </View>
+
+          <View style={[styles.card, { backgroundColor: theme.card }]}>
+          
+            
+            <TouchableOpacity
+              style={[styles.button, { backgroundColor: theme.primary }]}
+              onPress={exitGuestMode}
+            >
+              <Text style={styles.buttonText}>{t('exitGuestMode')}</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+      ) : (
+        <>
+      
       <View style={styles.header}>
         <View style={[styles.avatarContainer, { backgroundColor: theme.primary }]}>
           <Ionicons name="person" size={60} color="white" />
@@ -194,7 +217,10 @@ const AccountScreen = () => {
         >
           <Text style={styles.buttonText}>{t('logout')}</Text>
         </TouchableOpacity>
+        
       </View>
+       </>
+      )}
     </ScrollView>
   );
 };
@@ -297,6 +323,16 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     fontSize: 16,
   },
+    guestContent: {
+    paddingTop: 20,
+  },
+  guestText: {
+    fontSize: 16,
+    textAlign: 'center',
+    marginVertical: 20,
+    paddingHorizontal: 20,
+  },
 });
+
 
 export default AccountScreen;

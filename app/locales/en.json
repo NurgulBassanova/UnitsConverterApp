@@ -67,6 +67,9 @@
   "logout": "Logout",
   "logoutSuccess": "Logged out successfully",
   "logoutFailed": "Logout failed",
-  "changesSaved": "Changes saved successfully"
+  "changesSaved": "Changes saved successfully",
+  "continueAsGuest": "Continue as Guest",
+  "guestModeWarning": "You're using the app in guest mode. Some features may be limited.",
+  "exitGuestMode": "Exit Guest Mode"
       }
       

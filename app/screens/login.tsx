@@ -12,6 +12,7 @@ interface LoginProps {
 }
 
 const Login: React.FC<LoginProps> = ({ onLogin }) => {
+  const { enterGuestMode } = useAuth(); 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [name, setName] = useState('');
@@ -234,6 +235,17 @@ const handleSubmit = async () => {
           </Text>
         </TouchableOpacity>
 
+        <TouchableOpacity
+        style={[styles.guestButton, { backgroundColor: theme.secondary }]}
+        onPress={() => {
+          enterGuestMode();
+          if (onLogin) onLogin();
+          navigation.navigate('Account');
+        }}
+      >
+        <Text style={styles.buttonText}>{t('continueAsGuest')}</Text>
+      </TouchableOpacity>
+
         {/* Switch between Login/Register */}
         <View style={styles.switchContainer}>
           <Text style={{ color: theme.textSecondary }}>
@@ -329,6 +341,14 @@ const styles = StyleSheet.create({
     fontSize: 12,
     marginBottom: 10,
     marginLeft: 15,
+  },
+   guestButton: {
+    backgroundColor: 'blue',
+    height: 50,
+    borderRadius: 25,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginTop: 10,
   },
 });
 

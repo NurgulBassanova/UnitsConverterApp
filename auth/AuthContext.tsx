@@ -12,9 +12,12 @@ import { doc, setDoc, getDoc } from 'firebase/firestore';
 interface AuthContextType {
   user: User | null;
   loading: boolean;
+   isGuest: boolean;
   register: (email: string, password: string, name: string, surname: string) => Promise<void>;
   login: (email: string, password: string) => Promise<void>;
   logout: () => Promise<void>;
+   enterGuestMode: () => void; 
+  exitGuestMode: () => void; 
   updateUserPreferences: (prefs: UserPreferences) => Promise<void>;
 }
 
@@ -28,6 +31,7 @@ const AuthContext = createContext<AuthContextType>({} as AuthContextType);
 export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
+  const [isGuest, setIsGuest] = useState(false);
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, async (user) => {
@@ -84,13 +88,25 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     }
   };
 
-  return (
+   const enterGuestMode = () => {
+    setIsGuest(true);
+    setUser(null); // Гость не имеет Firebase-пользователя
+  };
+
+  const exitGuestMode = () => {
+    setIsGuest(false);
+  };
+
+   return (
     <AuthContext.Provider value={{ 
       user, 
       loading, 
+      isGuest,
       register, 
       login, 
       logout,
+      enterGuestMode,
+      exitGuestMode,
       updateUserPreferences
     }}>
       {children}

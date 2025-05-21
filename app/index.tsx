@@ -11,6 +11,7 @@ import Login from './screens/login';
 
 import { useTheme } from './theme/theme';
 import { useTranslation } from 'react-i18next';
+import { useAuth } from '@/auth/AuthContext';
 
 const aboutIcon = require('../assets/images/information.png');
 const converterIcon = require('../assets/images/math.png');
@@ -56,14 +57,13 @@ function TabNavigator() {
 }
 
 export default function Index() {
+  const { user, isGuest } = useAuth();
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
-  return (
-    <Stack.Navigator screenOptions={{ headerShown: false }}>
-      {!isLoggedIn ? (
-        <Stack.Screen name="Login">
-          {(props) => <Login {...props} onLogin={() => setIsLoggedIn(true)} />}
-        </Stack.Screen>
+   return (
+    <Stack.Navigator>
+      {!user && !isGuest ? (
+        <Stack.Screen name="Login" component={Login} />
       ) : (
         <Stack.Screen name="Main" component={TabNavigator} />
       )}
