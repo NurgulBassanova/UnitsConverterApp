@@ -55,6 +55,18 @@
     "no account?": "No account?",
     "haveAnAccount": "Have an account?",
     "loginFailed": "Login Failed",
-    "registrationFailed": "Registration Failed"
+    "registrationFailed": "Registration Failed",
+    "personalInfo": "Personal Information",
+  "name": "Name",
+  "notSpecified": "Not specified",
+  "enterName": "Enter your name",
+  "darkMode": "Dark Mode",
+  "editProfile": "Edit Profile",
+  "save": "Save",
+  "cancel": "Cancel",
+  "logout": "Logout",
+  "logoutSuccess": "Logged out successfully",
+  "logoutFailed": "Logout failed",
+  "changesSaved": "Changes saved successfully"
       }
       

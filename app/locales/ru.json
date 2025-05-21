@@ -55,5 +55,17 @@
     "no account?": "Нет аккаунта?",
     "haveAnAccount": "Уже есть аккаунт?",
     "loginFailed": "Ошибка входа",
-    "registrationFailed": "Ошибка регистрации"
+    "registrationFailed": "Ошибка регистрации",
+    "personalInfo": "Личная информация",
+  "name": "Имя",
+  "notSpecified": "Не указано",
+  "enterName": "Введите ваше имя",
+  "darkMode": "Темный режим",
+  "editProfile": "Редактировать профиль",
+  "save": "Сохранить",
+  "cancel": "Отмена",
+  "logout": "Выйти",
+  "logoutSuccess": "Вы успешно вышли",
+  "logoutFailed": "Не удалось выйти",
+  "changesSaved": "Изменения успешно сохранены"
     }

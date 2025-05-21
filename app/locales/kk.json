@@ -55,6 +55,18 @@
     "no account?": "Аккаунт жоқ па?",
     "haveAnAccount": "Аккаунтыңыз бар ма?",
     "loginFailed": "Кіру қатесі",
-    "registrationFailed": "Тіркеу қатесі"
+    "registrationFailed": "Тіркеу қатесі",
+     "personalInfo": "Жеке ақпарат",
+  "name": "Аты",
+  "notSpecified": "Көрсетілмеген",
+  "enterName": "Атыңызды енгізіңіз",
+  "darkMode": "Қараңғы режим",
+  "editProfile": "Профильді өңдеу",
+  "save": "Сақтау",
+  "cancel": "Бас тарту",
+  "logout": "Шығу",
+  "logoutSuccess": "Сәтті шықтыңыз",
+  "logoutFailed": "Шығу сәтсіз аяқталды",
+  "changesSaved": "Өзгерістер сәтті сақталды"
   }
   
