@@ -3,6 +3,7 @@ import { View, Text, StyleSheet, TouchableOpacity, Switch, Image, ScrollView } f
 import { useTranslation } from "react-i18next";
 import { changeLanguage, initI18n } from "../../i18n";
 import { useTheme } from "../theme/theme";
+import { Ionicons } from '@expo/vector-icons';
 
 export default function Settings() {
   const { t, i18n } = useTranslation();
@@ -18,33 +19,60 @@ export default function Settings() {
     setCurrentLang(lang);
   };
 
+  const getLanguageName = (code: string) => {
+    switch(code) {
+      case 'en': return 'English';
+      case 'ru': return 'Русский';
+      case 'kk': return 'Қазақша';
+      default: return code;
+    }
+  };
+
   return (
     <ScrollView contentContainerStyle={[styles.container, { backgroundColor: theme.background }]}>
-      {/* Theme Toggle */}
-      <View style={styles.themeToggleContainer}>
-        <Text style={[styles.themeText, { color: theme.text }]}>
-          {isDark ? t('Dark Mode') : t('Light Mode')}
-        </Text>
-        <Switch
-          value={isDark}
-          onValueChange={toggleTheme}
-          trackColor={{ false: "#767577", true: theme.primary }}
-          thumbColor={isDark ? "#FF6347" : "#f4f3f4"}
-        />
+      {/* Theme Section */}
+      <View style={[styles.section, { backgroundColor: theme.card }]}>
+        <View style={styles.sectionHeader}>
+          <Ionicons name="moon" size={24} color={theme.primary} />
+          <Text style={[styles.sectionTitle, { color: theme.text }]}>{t('Appearance')}</Text>
+        </View>
+        <View style={styles.settingItem}>
+          <Text style={[styles.settingText, { color: theme.text }]}>{t('Dark Mode')}</Text>
+          <Switch
+            value={isDark}
+            onValueChange={toggleTheme}
+            trackColor={{ false: theme.textSecondary, true: theme.primary }}
+            thumbColor={isDark ? theme.primary : "#f4f3f4"}
+          />
+        </View>
       </View>
 
-      {/* Language Switch */}
-      <View style={styles.languageSwitchContainer}>
-        <Text style={[styles.languageText, { color: theme.text }]}>
-        </Text>
-        <TouchableOpacity
-          onPress={() => {
-            const nextLang = currentLang === 'en' ? 'ru' : currentLang === 'ru' ? 'kk' : 'en';
-            handleLanguageChange(nextLang);
-          }}
-        >
-          <Image source={require('../../assets/images/language.png')} style={styles.langIcon} />
-        </TouchableOpacity>
+      {/* Language Section */}
+      <View style={[styles.section, { backgroundColor: theme.card }]}>
+        <View style={styles.sectionHeader}>
+          <Ionicons name="language" size={24} color={theme.primary} />
+          <Text style={[styles.sectionTitle, { color: theme.text }]}>{t('Language')}</Text>
+        </View>
+        <View style={styles.languageOptions}>
+          {['en', 'ru', 'kk'].map((lang) => (
+            <TouchableOpacity
+              key={lang}
+              style={[
+                styles.languageButton,
+                currentLang === lang && { backgroundColor: theme.primary },
+                { borderColor: theme.primary }
+              ]}
+              onPress={() => handleLanguageChange(lang)}
+            >
+              <Text style={[
+                styles.languageButtonText,
+                currentLang === lang ? { color: 'white' } : { color: theme.text }
+              ]}>
+                {getLanguageName(lang)}
+              </Text>
+            </TouchableOpacity>
+          ))}
+        </View>
       </View>
     </ScrollView>
   );
@@ -55,30 +83,50 @@ const styles = StyleSheet.create({
     flexGrow: 1,
     padding: 16,
   },
-  themeText: {
-    fontSize: 16,
-    marginRight: 10,
+  section: {
+    borderRadius: 12,
+    padding: 16,
+    marginBottom: 20,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
+    elevation: 3,
   },
-  languageText: {
-    fontSize: 16,
-    marginRight: 10,
+  sectionHeader: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: 16,
   },
-  themeToggleContainer: {
+  sectionTitle: {
+    fontSize: 18,
+    fontWeight: '600',
+    marginLeft: 10,
+  },
+  settingItem: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    marginBottom: 20,
-    marginTop: 50,
+    paddingVertical: 8,
   },
-  languageSwitchContainer: {
+  settingText: {
+    fontSize: 16,
+  },
+  languageOptions: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    alignItems: 'center',
-    marginBottom: 20,
-    marginTop: 10, 
+    marginTop: 8,
   },
-  langIcon: {
-    width: 30,
-    height: 30,
+  languageButton: {
+    flex: 1,
+    padding: 12,
+    borderRadius: 8,
+    borderWidth: 1,
+    marginHorizontal: 4,
+    alignItems: 'center',
+  },
+  languageButtonText: {
+    fontSize: 14,
+    fontWeight: '500',
   },
 });
