@@ -18,6 +18,9 @@ import {
 import { useTranslation } from "react-i18next";
 import { changeLanguage, initI18n } from "../../i18n";
 import { useTheme } from '../theme/theme';
+import { useAuth } from '../../auth/AuthContext';
+import { SyncService } from '../../services/sync';
+import OfflineBanner from '../../components/OfflineBanner';
 
 const unitTypes = {
   length: {
@@ -250,6 +253,41 @@ const Converter: React.FC = () => {
       setOutputValue(convertedValue.toFixed(2));
     }
   };
+
+  // Add to Converter component
+const { isOnline, syncData } = useAuth();
+
+const handleConvert = () => {
+  const conversion = {
+    from: `${inputValue} ${fromUnit}`,
+    to: `${outputValue} ${toUnit}`,
+    type: currentUnitType,
+    timestamp: new Date().toISOString()
+  };
+
+  if (isOnline) {
+    // Save to Firebase directly
+    saveConversionToFirebase(conversion);
+  } else {
+    // Queue for sync later
+    SyncService.queueData(conversion);
+    Toast.show({
+      type: 'info',
+      text1: 'Saved offline',
+      text2: 'Conversion will sync when online'
+    });
+  }
+};
+
+// Add sync button to UI
+{!isOnline && (
+  <View style={styles.offlineBanner}>
+    <Text style={styles.offlineText}>Offline Mode - Working Locally</Text>
+    <TouchableOpacity onPress={syncData} style={styles.syncButton}>
+      <Text>Sync Data</Text>
+    </TouchableOpacity>
+  </View>
+)}
 
   return (
     <SafeAreaView style={[styles.safeArea, { backgroundColor: theme.background }]}>
@@ -530,7 +568,22 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: '600',
   },
-  
+  offlineBanner: {
+    backgroundColor: '#ffcc00',
+    padding: 10,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginBottom: 10
+  },
+  offlineText: {
+    color: '#000'
+  },
+  syncButton: {
+    backgroundColor: '#fff',
+    padding: 5,
+    borderRadius: 5
+  }
   
 });
 

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Image } from 'react-native';
@@ -11,6 +11,11 @@ import Login from './screens/login';
 
 import { useTheme } from './theme/theme';
 import { useTranslation } from 'react-i18next';
+
+import { auth } from '../firebase/config';
+import { onAuthStateChanged } from 'firebase/auth';
+
+import { NetworkProvider } from './contexts/networkContext'; // Wrap the app
 
 const aboutIcon = require('../assets/images/information.png');
 const converterIcon = require('../assets/images/math.png');
@@ -56,17 +61,28 @@ function TabNavigator() {
 }
 
 export default function Index() {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState<boolean | null>(null); // null means checking status
+
+  useEffect(() => {
+    const unsub = onAuthStateChanged(auth, (user) => {
+      setIsLoggedIn(!!user);
+    });
+    return () => unsub();
+  }, []);
+
+  if (isLoggedIn === null) return null; // or a loading spinner
 
   return (
-    <Stack.Navigator screenOptions={{ headerShown: false }}>
-      {!isLoggedIn ? (
-        <Stack.Screen name="Login">
-          {(props) => <Login {...props} onLogin={() => setIsLoggedIn(true)} />}
-        </Stack.Screen>
-      ) : (
-        <Stack.Screen name="Main" component={TabNavigator} />
-      )}
-    </Stack.Navigator>
+    <NetworkProvider>
+      <Stack.Navigator screenOptions={{ headerShown: false }}>
+        {!isLoggedIn ? (
+          <Stack.Screen name="Login">
+            {(props) => <Login {...props} onLogin={() => setIsLoggedIn(true)} />}
+          </Stack.Screen>
+        ) : (
+          <Stack.Screen name="Main" component={TabNavigator} />
+        )}
+      </Stack.Navigator>
+    </NetworkProvider>
   );
 }
