@@ -1,13 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, Image, ScrollView, Switch, TextInput } from 'react-native';
-import { useAuth } from '../../auth/AuthContext';
+import { useAuth} from '../../auth/AuthContext';
 import { useTheme } from '../theme/theme';
 import { useTranslation } from 'react-i18next';
 import { Ionicons } from '@expo/vector-icons';
 import Toast from 'react-native-toast-message';
 
+
 const AccountScreen = () => {
-  const { user, isGuest, logout, exitGuestMode } = useAuth();
+  const { user, isGuest, logout, exitGuestMode,  preferences, updatePreferences  } = useAuth();
   const { theme, isDarkMode, toggleTheme } = useTheme();
   const { t, i18n } = useTranslation();
   const [currentLanguage, setCurrentLanguage] = useState(i18n.language);
@@ -15,12 +16,31 @@ const AccountScreen = () => {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
 
+
   useEffect(() => {
+      if (user) {
+        setEmail(user.email || '');
+      }
+      if (preferences) {
+        setCurrentLanguage(preferences.language);
+      }
+    }, [user, preferences]);
+
+      const handleToggleTheme = async () => {
+    const newTheme = isDarkMode ? 'light' : 'dark';
+    toggleTheme(); // Update local theme
     if (user) {
-      setEmail(user.email || '');
-      // Здесь можно добавить загрузку дополнительных данных пользователя из Firestore
+      await updatePreferences({ theme: newTheme }); // Update in Firestore
     }
-  }, [user]);
+  };
+
+  const changeLanguage = async (lang: string) => {
+    i18n.changeLanguage(lang);
+    setCurrentLanguage(lang);
+    if (user) {
+      await updatePreferences({ language: lang as 'en' | 'ru' | 'kk' });
+    }
+  };
 
   const handleLogout = async () => {
     try {
@@ -38,11 +58,7 @@ const AccountScreen = () => {
     }
   };
 
-  const changeLanguage = (lang: string) => {
-    i18n.changeLanguage(lang);
-    setCurrentLanguage(lang);
-    
-  };
+
 
   const handleSave = () => {
     // Здесь можно добавить логику сохранения изменений
