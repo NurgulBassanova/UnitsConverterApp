@@ -5,6 +5,8 @@ import { useTheme } from '../theme/theme';
 import { useTranslation } from 'react-i18next';
 import { Ionicons } from '@expo/vector-icons';
 import Toast from 'react-native-toast-message';
+import { doc, setDoc } from 'firebase/firestore';
+import { db } from '@/firebase/config';
 
 
 const AccountScreen = () => {
@@ -58,16 +60,24 @@ const AccountScreen = () => {
     }
   };
 
-
-
-  const handleSave = () => {
-    // Здесь можно добавить логику сохранения изменений
-    setIsEditing(false);
+const handleSave = async () => {
+  if (!user) return;
+  try {
+    await setDoc(doc(db, 'users', user.uid), { name }, { merge: true });
     Toast.show({
       type: 'success',
       text1: t('changesSaved'),
     });
-  };
+    setIsEditing(false);
+  } catch (error) {
+    Toast.show({
+      type: 'error',
+      text1: t('saveFailed'),
+      text2: t('somethingWentWrong'),
+    });
+  }
+};
+
 
   return (
     <ScrollView style={[styles.container, { backgroundColor: theme.background }]}>
@@ -139,12 +149,12 @@ const AccountScreen = () => {
             <Ionicons name="moon" size={20} color={theme.text} />
             <Text style={[styles.settingText, { color: theme.text }]}>{t('darkMode')}</Text>
           </View>
-          <Switch
-            value={isDarkMode}
-            onValueChange={toggleTheme}
-            thumbColor={theme.primary}
-            trackColor={{ false: theme.textSecondary, true: theme.primary }}
-          />
+       <Switch
+        value={isDarkMode}
+        onValueChange={handleToggleTheme}  // use this to sync with Firestore
+        thumbColor={theme.primary}
+        trackColor={{ false: theme.textSecondary, true: theme.primary }}
+      />
         </View>
 
         <View style={styles.settingItem}>
