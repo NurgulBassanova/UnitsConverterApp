@@ -55,7 +55,7 @@ Join our community of developers creating universal apps.
 - User authentication with Firebase (sign up, login, logout)
 - Guest mode support
 - View and update user profile preferences (theme and language)
-  ![Converter Screen](./screens/account.png)
+  ![Converter Screen](./screens/account.jpg)
 
 ### 🔄 Converter
 Multi-unit converter with support for several categories:
@@ -63,11 +63,11 @@ Multi-unit converter with support for several categories:
 - **Length** – Convert between millimeters, centimeters, meters, kilometers, etc.
 - **Temperature** – Convert between Celsius, Fahrenheit, and Kelvin
 - **Weight** – Convert between grams, kilograms, pounds, and ounces
-  ![Converter Screen](./screens/converter.png)
+  ![Converter Screen](./screens/converter.jpg)
 
 ### ℹ️ About
 - Learn more about the app and its development purpose
-  ![Converter Screen](./screens/about.png)
+  ![Converter Screen](./screens/about.jpg)
 
 ### ⚙️ Settings
 - Toggle between Light and Dark themes
@@ -75,5 +75,5 @@ Multi-unit converter with support for several categories:
   - 🇬🇧 English  
   - 🇷🇺 Russian  
   - 🇰🇿 Kazakh
-    ![Converter Screen](./screens/settings.png)
+    ![Converter Screen](./screens/settings.jpg)
 
