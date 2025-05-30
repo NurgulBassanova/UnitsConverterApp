@@ -71,9 +71,7 @@ Multi-unit converter with support for several categories:
 
 ### ⚙️ Settings
 - Toggle between Light and Dark themes
-- Switch app language:  
-  - 🇬🇧 English  
-  - 🇷🇺 Russian  
-  - 🇰🇿 Kazakh
+- Switch app language: English, Kazakh, Russian
+ 
     ![Converter Screen](./screens/settings.jpg)
 
