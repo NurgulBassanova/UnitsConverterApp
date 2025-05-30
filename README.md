@@ -48,3 +48,32 @@ Join our community of developers creating universal apps.
 
 - [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
 - [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+
+## 📱 Features
+
+### 👤 Account
+- User authentication with Firebase (sign up, login, logout)
+- Guest mode support
+- View and update user profile preferences (theme and language)
+  ![Converter Screen](./screens/account.png)
+
+### 🔄 Converter
+Multi-unit converter with support for several categories:
+- **Time** – Convert between seconds, minutes, hours, and days
+- **Length** – Convert between millimeters, centimeters, meters, kilometers, etc.
+- **Temperature** – Convert between Celsius, Fahrenheit, and Kelvin
+- **Weight** – Convert between grams, kilograms, pounds, and ounces
+  ![Converter Screen](./screens/converter.png)
+
+### ℹ️ About
+- Learn more about the app and its development purpose
+  ![Converter Screen](./screens/about.png)
+
+### ⚙️ Settings
+- Toggle between Light and Dark themes
+- Switch app language:  
+  - 🇬🇧 English  
+  - 🇷🇺 Russian  
+  - 🇰🇿 Kazakh
+    ![Converter Screen](./screens/settings.png)
+
